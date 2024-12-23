@@ -2,13 +2,13 @@ import React, { useContext, useState } from 'react'
 import { FaGoogle } from 'react-icons/fa6';
 import { IoMdClose, IoMdEyeOff } from 'react-icons/io'
 import { Link, useNavigate } from 'react-router-dom'
-// import { AuthContext } from '../../AuthProviders/AuthProvider';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { authContext } from '../../Provider/AuthProvider';
 
 export default function Register() {
   const Navigate = useNavigate();
-  // const { signUpWithGoogle, setUser, signUpUser, updataprofile } = useContext(AuthContext)
+  const { signUpWithGoogle, setUser, createUser, updataprofile } = useContext(authContext)
   
 
    const handleSubmit = (e)=>{
@@ -34,13 +34,15 @@ export default function Register() {
     const userInfo = { name, email, photo, password};
     console.log(userInfo);
 
-    signUpUser(email, password)
+    createUser(email, password)
     .then(res => {
       toast.success("Register successfully")
       setUser(res.user);
       /// updataed profile functionality starting.................
       updataprofile({displayName: name, photoURL: photo})
       .then(result => {
+        console.log(result);
+        
       })
       .catch(err => {
           // console.log(err);
@@ -78,7 +80,7 @@ export default function Register() {
       Navigate("/")
     })
     .catch(err => {
-      // console.log(err);
+      toast.error("Something went wrong " + err.message)
       
     })
   }

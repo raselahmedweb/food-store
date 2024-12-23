@@ -1,14 +1,18 @@
 import React, { createContext, useEffect, useState } from 'react';
+import { getAuth, updateProfile } from "firebase/auth";
 import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
-import auth from '../../firebase/firebase.init';
-import axios from 'axios';
-const authContext = createContext(null)
+import { app } from '../Firebase/firebase.config';
+const auth = getAuth(app);
+export const authContext = createContext(null)
 
 const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+
+    console.log(user);
+    
 
     const createUser = (email, password) => {
         setLoading(true);
@@ -30,6 +34,13 @@ const AuthProvider = ({ children }) => {
         return signOut(auth);
     }
 
+       // SignUp and Updata User Info functionality start here now******************************
+
+       const updataprofile = (updatedData)=>{
+        setLoading(true);
+        return updateProfile(auth.currentUser, updatedData)
+       }
+
 
     useEffect(()=>{
       const unsubscribe = onAuthStateChanged(auth, (currentUser) =>{
@@ -43,11 +54,13 @@ const AuthProvider = ({ children }) => {
 
     const authInfo = {
         user,
+        setUser,
         loading,
         createUser,
         singInUser,
         singInWithGoogle,
-        signOutUser
+        signOutUser,
+        updataprofile
     }
 
     return (
