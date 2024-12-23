@@ -10,6 +10,7 @@ export default function AddMovies() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    fetch(`${import.meta.env.VITE_foods_api}/foods`)
     const form = e.target;
     const photo = form.photo.value;
     const title = form.title.value;
@@ -53,6 +54,7 @@ export default function AddMovies() {
         text: "Minimum duration must be 60",
         confirmButtonText: "Okay"
       });
+
       return;
     }
     /// validations the movie title ----------------------------
@@ -67,31 +69,31 @@ export default function AddMovies() {
       return;
     }
 
-    const MovieInfo = { photo, title, genry, duration, year, ratting, summary, userEmail }
-    // console.log(MovieInfo);
-
-    fetch('https://movie-portal-back.vercel.app/movie', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(MovieInfo)
-    })
-      .then(res => res.json())
-      .then(data => {
-        // console.log(data);
-        if (data.insertedId) {
-          Swal.fire({
-            position: "center center",
-            icon: "success",
-            title: `New Movie Added Successfully`,
-            showConfirmButton: false,
-            timer: 2500
-          });
-          form.reset();
-          setTimeout(() => {
-            Navigate('/allmovives');
-          }, 2000);
-        }
+    const MovieInfo = { photo, title, genry, duration, year, ratting, summary, }
+    console.log(MovieInfo);
+       
+      fetch('import.meta.env.foods_api/foods', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(MovieInfo)
       })
+        .then(res => res.json())
+        .then(data => {
+          // console.log(data);
+          if (data.insertedId) {
+            Swal.fire({
+              position: "center center",
+              icon: "success",
+              title: `New Movie Added Successfully`,
+              showConfirmButton: false,
+              timer: 2500
+            });
+            form.reset();
+            setTimeout(() => {
+              Navigate('/allmovives');
+            }, 2000);
+          }
+        })
 
 
   }
@@ -101,63 +103,75 @@ export default function AddMovies() {
     <>
       <div className=' container mx-auto flex flex-col justify-center items-center'>
         <div className="bg-base-100 w-full max-w-7xl shrink-0 shadow-2xl relative">
-          <h2 className=' text-center font-bold  text-2xl mt-5'>Add Movie</h2>
+          <h2 className=' text-center font-bold  text-2xl mt-5'>Add Foods</h2>
           <Link to="/" className=' absolute top-1 -right-2 w-10 h-10 rounded-full text-red-400 text-2xl'><IoMdClose /></Link>
           <form onSubmit={handleSubmit} className="card-body">
             <div className=' flex justify-between items-center gap-5 my-2'>
               <div className="form-control w-full">
                 <label className="label">
-                  <span className="label-text font-bold">Movie URL</span>
+                  <span className="label-text font-bold">D.R Name</span>
                 </label>
-                <input name='photo' type="text" placeholder="Movie URL" className="input input-bordered" required />
+                <input name='DR' type="text" placeholder="DR Name" className="input input-bordered" required />
               </div>
               <div className="form-control w-full">
                 <label className="label">
-                  <span className="label-text font-bold">Movie Title</span>
+                  <span className="label-text font-bold">D.R email</span>
                 </label>
-                <input name='title' type="text" placeholder="Movie title" className="input input-bordered" required />
+                <input name='email' type="text" placeholder="DR your email" className="input input-bordered" required />
               </div>
+
             </div>
-            {/* 2nd value collection */}
+
+            {/* part two faield */}
+
             <div className=' flex justify-between items-center gap-5 my-2'>
               <div className="form-control w-full">
                 <label className="label">
-                  <span className="label-text font-bold">Movie Genre</span>
+                  <span className="label-text font-bold">Food Name</span>
                 </label>
-                <select className=' p-3 bg-transparent border-2 rounded-md text-semibold outline-none border-gray-700 focus:ring-2 focus:ring-gray-700' name="genry" id="" required>
-                  <option value="" disabled selected>Select Genry</option>
-                  <option value="comedy">Comedy</option>
-                  <option value="drama">Drama</option>
-                  <option value="horror">Horror</option>
-                </select>
+                <input name='title' type="text" placeholder="Food Name" className="input input-bordered" required />
               </div>
               <div className="form-control w-full">
                 <label className="label">
-                  <span className="label-text">Movie Duration</span>
+                  <span className="label-text font-bold">Expire date</span>
                 </label>
-                <input name='duration' type="number" placeholder="Movie duration" className="input input-bordered" required />
+                <input name='email' type="date" placeholder="expire date" className="input input-bordered" required />
+              </div>
+
+            </div>
+            {/* 2nd value collection */}
+            <div className=' flex justify-between items-center gap-5 my-2'>
+            <div className="form-control w-full">
+                <label className="label">
+                  <span className="label-text font-bold">Food URL</span>
+                </label>
+                <input name='photo' type="text" placeholder="Food URL" className="input input-bordered" required />
+              </div>
+              <div className="form-control w-full">
+                <label className="label">
+                  <span className="label-text">Food Quentity</span>
+                </label>
+                <input name='duration' type="number" placeholder="Food Quentity" className="input input-bordered" required />
               </div>
             </div>
             {/* 3rd value collection */}
             <div className=' flex justify-between items-center gap-5 my-2'>
               <div className="form-control w-full">
                 <label className="label">
-                  <span className="label-text font-bold">Movie Release Year</span>
+                  <span className="label-text font-bold">Food Status</span>
                 </label>
-                <select className=' p-3 bg-transparent border-2 rounded-md text-semibold outline-none border-gray-700 focus:ring-2 focus:ring-gray-700' name="year" id="" required>
-                  <option value="" disabled selected>Select Release Year</option>
-                  <option value="2024">2024</option>
-                  <option value="2023">2023</option>
-                  <option value="2022">2022</option>
-                  <option value="2021">2021</option>
-                  <option value="2020">2020</option>
+                <select className=' p-3 bg-transparent border-2 rounded-md text-semibold outline-none text-gray-400 border-gray-700 focus:ring-2 focus:ring-gray-700' name="year" id="" required>
+                  <option className=' text-black' value="" disabled selected>Food Status</option>
+                  <option className=' text-black' value="available">available</option>
+                  <option className=' text-black' value="requested">requested</option>
+                  <option className=' text-black' value="sells">expired</option>
                 </select>
               </div>
               <div className="form-control w-full">
                 <label className="label">
-                  <span className="label-text font-bold">Movie Ratting</span>
+                  <span className="label-text">Location</span>
                 </label>
-                <input name='ratting' type="number" placeholder="Movie Ratting" className="input input-bordered" required />
+                <input name='duration' type="text" placeholder="Pickup location" className="input input-bordered" required />
               </div>
             </div>
             <div>
