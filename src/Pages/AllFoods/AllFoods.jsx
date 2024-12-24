@@ -1,7 +1,63 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useLoaderData } from 'react-router-dom'
+import Swal from 'sweetalert2';
+import { IoSearchSharp } from 'react-icons/io5';
+import FoodDetails from '../FooodDetails/FoodDetails';
 
-export default function AllFoods() {
+export default function AllMovies() {
+  const allfood = useLoaderData();
+  
+
+  const [foodData, setFoodData] = useState(allfood);
+  // const [search, setSearch] = useState("");
+  
+
+/// sorting functationality starts here now....
+
+  const handleSort = ()=>{
+    const sortedFoods = [...foodData].sort((a, b) => b.quantity - a.quantity);
+    setFoodData(sortedFoods);
+    Swal.fire({
+      position: "center center",
+      icon: "success",
+      title: "Movie Sorted",
+      showConfirmButton: false,
+      timer: 2500
+    });
+   }
+
+   //// Search the under all movies and show to search releted data
+
+  //  useEffect(()=>{
+  //     fetch(`https://movie-portal-back.vercel.app/movie?searchParams=${search}`)
+  //      .then(res => res.json())
+  //      .then(data => {
+  //        setAllMovieData(data);
+  //      })
+  //  }, [search])
+
+  
   return (
-    <div>AllFoods</div>
+    <>
+      <div className=' w-96 md:container mx-auto min-h-screen'>
+        <div className=' md:flex justify-between items-center my-10'>
+          <div>
+            <h2 className=' text-xl font-bold'>Total Foods Data ({foodData.length}) </h2>
+          </div>
+          <div className=' w-96 my-5 md:my-0'>
+          <input type="text" onChange={e=> setSearch(e.target.value)} placeholder="Search Movie" className="input input-bordered w-full" />
+          </div>
+          <div><button onClick={()=>handleSort()} className=' btn btn-accent text-white'>Sort by Quantity</button></div>
+        </div>
+         
+         {/* Showing the movie data  */}
+         {
+          foodData.length?
+          <div className=' grid md:grid-cols-2 lg:grid-cols-3 gap-10 mb-10'>
+          { foodData.map(foods => <FoodDetails key={foods._id} foods={foods} />)}
+        </div> : <div className=' text-3xl font-semibold flex justify-center gap-3 items-center min-h-screen'> <IoSearchSharp /> Not found Foods</div>
+        }
+      </div>
+    </>
   )
 }
