@@ -2,13 +2,13 @@ import React, { useContext } from 'react'
 import { FaGoogle } from 'react-icons/fa6';
 import { IoMdClose, IoMdEyeOff } from 'react-icons/io'
 import { Link, useNavigate } from 'react-router-dom'
-// import { AuthContext } from '../../AuthProviders/AuthProvider';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { authContext } from '../../Provider/AuthProvider';
 
 export default function Login() {
 
-  // const { SignInUser, setUser } = useContext(AuthContext);
+  const { singInUser, setUser, singInWithGoogle } = useContext(authContext);
   const Navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -19,7 +19,7 @@ export default function Login() {
     const password = form.password.value;
     // console.log({ email, password })
 
-    SignInUser(email, password)
+    singInUser(email, password)
       .then(result => {
         setUser(result.user);
         toast.success("Login Succfull")
@@ -31,6 +31,20 @@ export default function Login() {
         toast.error("Something went wrong " + error.message)
       })
   }
+
+    // singUp with google functionality starting --------------
+  
+    const loginWithGoogle = ()=> {
+      singInWithGoogle()
+      .then(data => {
+        setUser(data.user)
+        Navigate("/")
+      })
+      .catch(err => {
+        toast.error("Something went wrong " + err.message)
+        
+      })
+    }
 
   return (
     <>
@@ -60,7 +74,7 @@ export default function Login() {
               <p className=' text-right mb-3 font-semibold'>Don't Have An Account ? <Link to="/register" className="text-red-500 hover:underline">Register</Link></p>
               <button className="btn btn-primary">Login</button>
               <span className=' text-xl my-3 text-center'>or</span>
-              <button className=' btn btn-info'> <span className=' text-yellow-400 text-lg'><FaGoogle /></span> SignUp Wtih Google</button>
+              <button onClick={loginWithGoogle} className=' btn btn-info'> <span className=' text-yellow-400 text-lg'><FaGoogle /></span> SignUp Wtih Google</button>
             </div>
           </form>
         </div>

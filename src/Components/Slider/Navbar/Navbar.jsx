@@ -1,19 +1,19 @@
 import React, { useContext, useState } from 'react'
 import { FaRegUserCircle } from 'react-icons/fa'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
-// import { AuthContext } from '../../AuthProvider/AuthProvider'
 import { MdLogout } from 'react-icons/md';
 import { FaBarsStaggered } from 'react-icons/fa6';
 import { IoMdClose } from 'react-icons/io';
+import { authContext } from '../../../Provider/AuthProvider';
 
 export default function Navbar() {
-    // const { user, singOut } = useContext(AuthContext)
+    const { user, signOutUser } = useContext(authContext)
     const [show, setShow] = useState(false);
 
     const Navigate = useNavigate();
 
     const handleSignOut = () => {
-        singOut()
+        signOutUser();
         toast.warning("Logged Out Successfully!")
         Navigate('/')
     }
@@ -59,36 +59,32 @@ export default function Navbar() {
                     <ul className=' flex items-center gap-5'>
                         <li><NavLink to="/">Home</NavLink></li>
                         <li><NavLink to="/allfood">Available Foods</NavLink></li>
-                        <li><NavLink to="/addfood">Add Foods</NavLink></li>
-                        <li><NavLink to="/mypost">Manage My Foods</NavLink></li>
-                        <li><NavLink to="/myrequest">My Food Request</NavLink></li>
+                        {user && user.email ? <li><NavLink to="/addfood">Add Foods</NavLink></li> : ""}
+                        {user && user.email ? <li><NavLink to="/mypost">Manage My Foods</NavLink></li> : ""}
+                        {user && user.email ? <li><NavLink to="/myrequest">My Food Request</NavLink></li> : ""}
                         <li><NavLink to="/cook">Cooking</NavLink></li>
                         <li><NavLink to="/delivary">Delivary</NavLink></li>
-                        {/* {user && user.email ? <li><NavLink to="/Profile">Profile</NavLink></li> : ""}
-                        {user && user.email ? <li><NavLink to="/updata">Updata Profile</NavLink></li> : ""} */}
                     </ul>
                 </div>
                 <div className=' flex items-center gap-5'>
                     <div className=' cursor-pointer'>
                         <div>
-                            {/* {user && user.email ? <img title={user.displayName} className=' w-10 h-10 rounded-full object-cover' src={user.photoURL} alt="" /> : <span className=' text-4xl'><FaRegUserCircle /></span>} */}
-                             <span className=' text-4xl'><FaRegUserCircle /></span>
+                            {user && user.email ? <img title={user.displayName} className=' w-10 h-10 rounded-full object-cover' src={user.photoURL} alt="" /> : <span className=' text-4xl'><FaRegUserCircle /></span>}
                         </div>
-                        {/* {user && user.email? <img className=' w-10 h-10 rounded-full' src={user.photoURL} alt="" /> : <img src={profileLogo} alt="" />}  */}
                     </div>
                     {
-                        //   user?
-                        //   <button onClick={handleSignOut} className=' btn btn-error cursor-pointer'><MdLogout />Log-Out</button>
-                        //   :
-                        //   <div className=' flex justify-center items-center gap-3'>
-                        //      <div><Link to="/login" className=' btn btn-accent cursor-pointer'>Login</Link></div>
-                        //      <div><Link to="/register" className=' btn btn-success cursor-pointer text-white'>Register</Link></div>
-                        //   </div>
+                        user ?
+                            <button onClick={handleSignOut} className=' btn btn-error cursor-pointer'><MdLogout />Log-Out</button>
+                            :
+                            <div className=' flex justify-center items-center gap-3'>
+                                <div><Link to="/login" className=' btn btn-accent cursor-pointer'>Login</Link></div>
+                                <div><Link to="/register" className=' btn btn-success cursor-pointer text-white'>Register</Link></div>
+                            </div>
                     }
-                    <div className=' flex justify-center items-center gap-3'>
+                    {/* <div className=' flex justify-center items-center gap-3'>
                         <div><Link to="/login" className=' btn btn-accent cursor-pointer'>Login</Link></div>
                         <div><Link to="/register" className=' btn btn-success cursor-pointer text-white'>Register</Link></div>
-                    </div>
+                    </div> */}
                 </div>
             </nav>
         </>

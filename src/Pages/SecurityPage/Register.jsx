@@ -8,7 +8,7 @@ import { authContext } from '../../Provider/AuthProvider';
 
 export default function Register() {
   const Navigate = useNavigate();
-  const { signUpWithGoogle, setUser, createUser, updataprofile } = useContext(authContext)
+  const { singInWithGoogle, setUser, createUser, updataprofile } = useContext(authContext)
   
 
    const handleSubmit = (e)=>{
@@ -74,7 +74,7 @@ export default function Register() {
   // singUp with google functionality starting --------------
 
   const loginWithGoogle = ()=> {
-    signUpWithGoogle()
+    singInWithGoogle()
     .then(data => {
       setUser(data.user)
       Navigate("/")

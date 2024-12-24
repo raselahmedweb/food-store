@@ -7,7 +7,7 @@ export default function Main() {
   return (
     <>
       <Navbar />
-      <div className=' min-h-[calc(100vh-580px)] flex justify-center items-center'>
+      <div className=' min-h-[calc(100vh-580px)] flex flex-col justify-center items-center'>
         <Outlet />
       </div>
       <Footer />

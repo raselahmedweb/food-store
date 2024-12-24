@@ -2,22 +2,29 @@ import React, { useContext, useState } from 'react'
 import { IoMdClose, IoMdEye, IoMdEyeOff } from 'react-icons/io';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-// import { AuthContext } from '../AuthProviders/AuthProvider';
+import { authContext } from '../../Provider/AuthProvider';
 
 export default function AddMovies() {
-  // const { userEmail } = useContext(AuthContext);
+  const { user } = useContext(authContext);
+  console.log(user);
+  
   const Navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch(`${import.meta.env.VITE_foods_api}/foods`)
+    
     const form = e.target;
+    const donator={
+      name: user.displayName,
+      email: user.email,
+      profile: user.photoURL
+    };
+    const foodName = form.foodName.value;
+    const date = form.date.value;
     const photo = form.photo.value;
-    const title = form.title.value;
-    const genry = form.genry.value;
-    const duration = form.duration.value;
-    const year = form.year.value;
-    const ratting = form.ratting.value;
+    const quentity = form.quentity.value;
+    const status = form.status.value;
+    const location = form.location.value;
     const summary = form.summary.value;
 
     /// validations the movie url ----------------------------
@@ -35,7 +42,7 @@ export default function AddMovies() {
 
     /// validations the movie title ----------------------------
 
-    if (!title || title.trim().length < 2) {
+    if (!foodName || foodName.trim().length < 2) {
       Swal.fire({
         icon: "error",
         title: "Invalid Movie Title",
@@ -45,18 +52,6 @@ export default function AddMovies() {
       return;
     }
 
-    /// validations the movie Durations ----------------------------
-
-    if (duration == 60 || duration <= 60) {
-      Swal.fire({
-        icon: "error",
-        title: "Invalid Movie Duration",
-        text: "Minimum duration must be 60",
-        confirmButtonText: "Okay"
-      });
-
-      return;
-    }
     /// validations the movie title ----------------------------
 
     if (!summary || summary.trim().length < 10) {
@@ -69,31 +64,31 @@ export default function AddMovies() {
       return;
     }
 
-    const MovieInfo = { photo, title, genry, duration, year, ratting, summary, }
+    const MovieInfo = { donator, foodName, date, photo, quentity, status, location, summary, }
     console.log(MovieInfo);
        
-      fetch('import.meta.env.foods_api/foods', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(MovieInfo)
-      })
-        .then(res => res.json())
-        .then(data => {
-          // console.log(data);
-          if (data.insertedId) {
-            Swal.fire({
-              position: "center center",
-              icon: "success",
-              title: `New Movie Added Successfully`,
-              showConfirmButton: false,
-              timer: 2500
-            });
-            form.reset();
-            setTimeout(() => {
-              Navigate('/allmovives');
-            }, 2000);
-          }
-        })
+      // fetch(`${import.meta.env.VITE_foods_api}/foods`, {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(MovieInfo)
+      // })
+      //   .then(res => res.json())
+      //   .then(data => {
+      //     // console.log(data);
+      //     if (data.insertedId) {
+      //       Swal.fire({
+      //         position: "center center",
+      //         icon: "success",
+      //         title: `New Movie Added Successfully`,
+      //         showConfirmButton: false,
+      //         timer: 2500
+      //       });
+      //       form.reset();
+      //       setTimeout(() => {
+      //         Navigate('/allmovives');
+      //       }, 2000);
+      //     }
+      //   })
 
 
   }
@@ -111,13 +106,13 @@ export default function AddMovies() {
                 <label className="label">
                   <span className="label-text font-bold">D.R Name</span>
                 </label>
-                <input name='DR' type="text" placeholder="DR Name" className="input input-bordered" required />
+                <input name='DR' type="text" value={user?.displayName} placeholder="DR Name" className="input input-bordered" required />
               </div>
               <div className="form-control w-full">
                 <label className="label">
                   <span className="label-text font-bold">D.R email</span>
                 </label>
-                <input name='email' type="text" placeholder="DR your email" className="input input-bordered" required />
+                <input name='email' type="text" value={user?.email} placeholder="DR your email" className="input input-bordered" required />
               </div>
 
             </div>
@@ -129,13 +124,13 @@ export default function AddMovies() {
                 <label className="label">
                   <span className="label-text font-bold">Food Name</span>
                 </label>
-                <input name='title' type="text" placeholder="Food Name" className="input input-bordered" required />
+                <input name='foodName' type="text" placeholder="Food Name" className="input input-bordered" required />
               </div>
               <div className="form-control w-full">
                 <label className="label">
                   <span className="label-text font-bold">Expire date</span>
                 </label>
-                <input name='email' type="date" placeholder="expire date" className="input input-bordered" required />
+                <input name='date' type="date" placeholder="expire date" className="input input-bordered" required />
               </div>
 
             </div>
@@ -151,7 +146,7 @@ export default function AddMovies() {
                 <label className="label">
                   <span className="label-text">Food Quentity</span>
                 </label>
-                <input name='duration' type="number" placeholder="Food Quentity" className="input input-bordered" required />
+                <input name='quentity' type="number" placeholder="Food Quentity" className="input input-bordered" required />
               </div>
             </div>
             {/* 3rd value collection */}
@@ -160,7 +155,7 @@ export default function AddMovies() {
                 <label className="label">
                   <span className="label-text font-bold">Food Status</span>
                 </label>
-                <select className=' p-3 bg-transparent border-2 rounded-md text-semibold outline-none text-gray-400 border-gray-700 focus:ring-2 focus:ring-gray-700' name="year" id="" required>
+                <select className=' p-3 bg-transparent border-2 rounded-md text-semibold outline-none text-gray-400 border-gray-700 focus:ring-2 focus:ring-gray-700' name="status" id="" required>
                   <option className=' text-black' value="" disabled selected>Food Status</option>
                   <option className=' text-black' value="available">available</option>
                   <option className=' text-black' value="requested">requested</option>
@@ -171,17 +166,17 @@ export default function AddMovies() {
                 <label className="label">
                   <span className="label-text">Location</span>
                 </label>
-                <input name='duration' type="text" placeholder="Pickup location" className="input input-bordered" required />
+                <input name='location' type="text" placeholder="Pickup location" className="input input-bordered" required />
               </div>
             </div>
             <div>
               <textarea
-                placeholder="Movie Summary" name='summary' required
+                placeholder="Foods description..." name='summary' required
                 className="textarea textarea-bordered textarea-lg w-full"></textarea>
             </div>
 
             <div className="form-control">
-              <button className="btn btn-primary  text-white">Add Movie</button>
+              <button className="btn btn-primary  text-white">Add Foods</button>
             </div>
           </form>
         </div>
