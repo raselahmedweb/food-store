@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useLoaderData } from 'react-router-dom'
 import Swal from 'sweetalert2';
 import { IoSearchSharp } from 'react-icons/io5';
-import FoodDetails from '../FooodDetails/FoodDetails';
+import SingleFoods from '../FooodDetails/SingleFoods';
 
 export default function AllMovies() {
   const allfood = useLoaderData();
@@ -20,7 +20,7 @@ export default function AllMovies() {
     Swal.fire({
       position: "center center",
       icon: "success",
-      title: "Movie Sorted",
+      title: "Foods Sorted",
       showConfirmButton: false,
       timer: 2500
     });
@@ -54,7 +54,7 @@ export default function AllMovies() {
          {
           foodData.length?
           <div className=' grid md:grid-cols-2 lg:grid-cols-3 gap-10 mb-10'>
-          { foodData.map(foods => <FoodDetails key={foods._id} foods={foods} />)}
+          { foodData.map(foods => <SingleFoods key={foods._id} foods={foods} />)}
         </div> : <div className=' text-3xl font-semibold flex justify-center gap-3 items-center min-h-screen'> <IoSearchSharp /> Not found Foods</div>
         }
       </div>
