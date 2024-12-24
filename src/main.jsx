@@ -19,6 +19,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import AllFoods from './Pages/AllFoods/AllFoods';
 import AddFood from './Pages/AddFoods/AddFood';
 import AuthProvider from './Provider/AuthProvider';
+import FoodDetails from './Pages/FooodDetails/FoodDetails';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,11 @@ const router = createBrowserRouter([
         path: "/allfood",
         element: <AllFoods />,
         loader: ()=> fetch(`${import.meta.env.VITE_foods_api}/foods`)
+      },
+      {
+        path: "/details/:id",
+        element: <FoodDetails />,
+        loader: ( { params } )=> fetch(`${import.meta.env.VITE_foods_api}/food/${params.id}`)
       },
       {
         path: "/addfood",

@@ -23,7 +23,7 @@ export default function HomeCards() {
               <a href="#">
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{data.foodName}</h5>
               </a>
-              <p className={`mb-3 font-semibold text-lg text-gray-700 ${data.foodStatus === "Available" ? "text-green-500" : ""} ${data.foodStatus === "Pending Pickup" ? "text-blue-600" : ""} ${data.foodStatus === "Expired" ? "text-[#e96666]" : ""} inline rounded-full`}>{data.foodStatus}</p>
+              <p className={`mb-3 font-semibold text-lg text-gray-700 ${data.foodStatus === "Available" ? "text-green-500" : ""} ${data.foodStatus === "Pending" ? "text-blue-600" : ""} ${data.foodStatus === "Expired" ? "text-[#e96666]" : ""} inline rounded-full`}>{data.foodStatus}</p>
               <p className="mb-3 font-semibold text-lg text-gray-700 dark:text-gray-400">Expire Date: {data.expireDateTime}</p>
               <p className="mb-3 font-semibold text-lg text-gray-700 dark:text-gray-400">Quentity:  <span className=' bg-slate-600 py-1 px-3 rounded-full'>{data.quantity}</span></p>
               <p className="mb-3 font-semibold text-lg text-gray-700 dark:text-gray-400">Location: {data.location}</p>
