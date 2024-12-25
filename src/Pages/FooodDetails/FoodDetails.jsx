@@ -1,13 +1,18 @@
-import React from 'react'
-import { Link, useLoaderData, useNavigate } from 'react-router-dom'
+import React, { useContext } from 'react'
+import { data, Link, useLoaderData, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2';
+import { authContext } from '../../Provider/AuthProvider';
 
 export default function FoodDetails() {
+
+    const { user } = useContext(authContext);
+    const currrentTime = new Date();
+    const requestedTime = `${currrentTime.toLocaleDateString()} - ${currrentTime.toLocaleTimeString()}`
 
     const singleFoodData = useLoaderData();
     console.log(singleFoodData);
 
-    const { foodName, foodImg, quantity, location, expireDateTime, donator, foodStatus } = singleFoodData;
+    const { _id, foodName, foodImg, quantity, location, expireDateTime, donator, foodStatus } = singleFoodData;
     const Navigate = useNavigate();
     const allMovie = () => {
         Navigate('/allmovives');
@@ -56,6 +61,8 @@ export default function FoodDetails() {
 
     const handleRequest = () => {
 
+        my_modal_3.showModal()
+
         // Swal.fire({
         //     position: "center center",
         //     icon: "success",
@@ -72,15 +79,109 @@ export default function FoodDetails() {
             {/* useing the modal code */}
 
             {/* You can open the modal using document.getElementById('ID').showModal() method */}
-            <button className="btn" onClick={() => document.getElementById('my_modal_3').showModal()}>open modal</button>
-            <dialog id="my_modal_3" className="modal">
-                <div className="modal-box">
+            <dialog id="my_modal_3" className="modal w-5xl">
+                <div className=" modal-box p-0 bg-gray-800">
                     <form method="dialog">
                         {/* if there is a button in form, it will close the modal */}
                         <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                     </form>
-                    <h3 className="font-bold text-lg">Hello!</h3>
-                    <p className="py-4">Press ESC key or click on ✕ button to close</p>
+                    <div className="card-body">
+                        <div className=' flex justify-between items-center gap-5 my-2'>
+                            <div className="form-control w-full">
+                                <label className="label">
+                                    <span className="label-text font-bold">Food Name</span>
+                                </label>
+                                <input name='DR' type="text" value={foodName} placeholder="DR Name" className="input input-bordered" required />
+                            </div>
+                            <div className="form-control w-full">
+                                <label className="label">
+                                    <span className="label-text font-bold">Food image</span>
+                                </label>
+                                <input name='email' type="text" value={foodImg} placeholder="DR your email" className="input input-bordered" required />
+                            </div>
+
+                        </div>
+
+                        {/* part two faield */}
+
+                        <div className=' flex justify-between items-center gap-5 my-2'>
+                            <div className="form-control w-full">
+                                <label className="label">
+                                    <span className="label-text font-bold">Food Id</span>
+                                </label>
+                                <input name='foodName' type="text" placeholder="Food Name" value={_id} className="input input-bordered" required />
+                            </div>
+                            <div className="form-control w-full">
+                                <label className="label">
+                                    <span className="label-text font-bold">Donator Email</span>
+                                </label>
+                                <input name='date' type="text" value={donator.email} placeholder="expire date" className="input input-bordered" required />
+                            </div>
+
+                        </div>
+                        {/* 2nd value collection */}
+                        <div className=' flex justify-between items-center gap-5 my-2'>
+                            <div className="form-control w-full">
+                                <label className="label">
+                                    <span className="label-text font-bold">Donator Name</span>
+                                </label>
+                                <input name='photo' type="text" value={donator.name} placeholder="Food URL" className="input input-bordered" required />
+                            </div>
+                            <div className="form-control w-full">
+                                <label className="label">
+                                    <span className="label-text">User email</span>
+                                </label>
+                                <input name='quentity' type="text" value={user?.email} placeholder="Food Quentity" className="input input-bordered" required />
+                            </div>
+                        </div>
+                        {/* 3rd value collection */}
+                        <div className=' flex justify-between items-center gap-5 my-2'>
+                            
+                            <div className="form-control w-full">
+                                <label className="label">
+                                    <span className="label-text">Request Date</span>
+                                </label>
+                                <input name='location' type="text" value={requestedTime}  placeholder="current date" className="input input-bordered" required />
+                            </div>
+
+                            <div className="form-control w-full">
+                                <label className="label">
+                                    <span className="label-text">Picup location</span>
+                                </label>
+                                <input name='location' type="text" value={location}  placeholder="current date" className="input input-bordered" required />
+                            </div>
+
+                            
+                        </div>
+                        {/* 4th value collection */}
+                        <div className=' flex justify-between items-center gap-5 my-2'>
+                            
+                            <div className="form-control w-full">
+                                <label className="label">
+                                    <span className="label-text">Expired Date</span>
+                                </label>
+                                <input name='location' type="text" value={expireDateTime}  placeholder="current date" className="input input-bordered" required />
+                            </div>
+
+                            <div className="form-control w-full">
+                                <label className="label">
+                                    <span className="label-text font-bold">Food Status</span>
+                                </label>
+                                <select className=' w-full p-3 bg-transparent border-2 rounded-md text-semibold outline-none text-gray-400 border-gray-700 focus:ring-2 focus:ring-gray-700' name="status" defaultValue={foodStatus} id="" required>
+                                    <option className=' text-black' value="" disabled selected>Food Status</option>
+                                    <option className=' text-black' value="available">available</option>
+                                    <option className=' text-black' value="requested">requested</option>
+                                    <option className=' text-black' value="sells">expired</option>
+                                </select>
+                            </div>
+
+                            
+                        </div>
+
+                        <div className="form-control">
+                            <button className="btn btn-accent text-white">Request</button>
+                        </div>
+                    </div>
                 </div>
             </dialog>
 
