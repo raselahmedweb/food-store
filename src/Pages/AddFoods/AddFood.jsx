@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { authContext } from '../../Provider/AuthProvider';
 
-export default function AddMovies() {
+export default function AddFood() {
   const { user } = useContext(authContext);
   console.log(user);
   
@@ -17,78 +17,73 @@ export default function AddMovies() {
     const donator={
       name: user.displayName,
       email: user.email,
-      profile: user.photoURL
+      img: user.photoURL
     };
     const foodName = form.foodName.value;
-    const date = form.date.value;
-    const photo = form.photo.value;
-    const quentity = form.quentity.value;
-    const status = form.status.value;
+    const foodImg = form.photo.value;
+    const expireDateTime = form.date.value;
+    const quantity = form.quentity.value;
+    const foodStatus = form.status.value;
     const location = form.location.value;
-    const summary = form.summary.value;
 
-    /// validations the movie url ----------------------------
+    /// validations the food url ----------------------------
 
     const urlPattern = /^https?:\/\/[\w.-]+\.[a-z]{2,6}(\/[\w-./?%&=]*)?$/i;
-    if (!urlPattern.test(photo)) {
+    if (!urlPattern.test(foodImg)) {
       Swal.fire({
         icon: "error",
-        title: "Invalid Movie URL",
-        text: "Please enter a valid movie URL",
+        title: "Invalid food URL",
+        text: "Please enter a valid food URL",
         confirmButtonText: "Okay"
       });
       return;
     }
 
-    /// validations the movie title ----------------------------
+    /// validations the food title ----------------------------
 
     if (!foodName || foodName.trim().length < 2) {
       Swal.fire({
         icon: "error",
-        title: "Invalid Movie Title",
-        text: "Please enter a valid movie title with at least 2 characters",
+        title: "Invalid food Title",
+        text: "Please enter a valid food title with at least 2 characters",
         confirmButtonText: "Okay"
       });
       return;
     }
 
-    /// validations the movie title ----------------------------
-
-    if (!summary || summary.trim().length < 10) {
-      Swal.fire({
-        icon: "error",
-        title: "Invalid Movie Summary",
-        text: "You must provide at least 10 characters",
-        confirmButtonText: "Okay"
-      });
-      return;
+    const addFoods = { 
+      foodName,
+      foodImg, 
+      quantity, 
+      location,
+      expireDateTime, 
+      donator,
+      foodStatus, 
     }
-
-    const MovieInfo = { donator, foodName, date, photo, quentity, status, location, summary, }
-    console.log(MovieInfo);
+    console.log(addFoods);
        
-      // fetch(`${import.meta.env.VITE_foods_api}/foods`, {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(MovieInfo)
-      // })
-      //   .then(res => res.json())
-      //   .then(data => {
-      //     // console.log(data);
-      //     if (data.insertedId) {
-      //       Swal.fire({
-      //         position: "center center",
-      //         icon: "success",
-      //         title: `New Movie Added Successfully`,
-      //         showConfirmButton: false,
-      //         timer: 2500
-      //       });
-      //       form.reset();
-      //       setTimeout(() => {
-      //         Navigate('/allmovives');
-      //       }, 2000);
-      //     }
-      //   })
+      fetch(`${import.meta.env.VITE_foods_api}/addfoods`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(addFoods)
+      })
+        .then(res => res.json())
+        .then(data => {
+          // console.log(data);
+          if (data.insertedId) {
+            Swal.fire({
+              position: "center center",
+              icon: "success",
+              title: `New food Added Successfully`,
+              showConfirmButton: false,
+              timer: 2500
+            });
+            form.reset();
+            setTimeout(() => {
+              Navigate('/allfood');
+            }, 2000);
+          }
+        })
 
 
   }
@@ -157,9 +152,9 @@ export default function AddMovies() {
                 </label>
                 <select className=' p-3 bg-transparent border-2 rounded-md text-semibold outline-none text-gray-400 border-gray-700 focus:ring-2 focus:ring-gray-700' name="status" id="" required>
                   <option className=' text-black' value="" disabled selected>Food Status</option>
-                  <option className=' text-black' value="available">available</option>
-                  <option className=' text-black' value="requested">requested</option>
-                  <option className=' text-black' value="sells">expired</option>
+                  <option className=' text-black' value="Available">Available</option>
+                  <option className=' text-black' value="Requested">Requested</option>
+                  <option className=' text-black' value="Expired">Expired</option>
                 </select>
               </div>
               <div className="form-control w-full">
@@ -168,11 +163,6 @@ export default function AddMovies() {
                 </label>
                 <input name='location' type="text" placeholder="Pickup location" className="input input-bordered" required />
               </div>
-            </div>
-            <div>
-              <textarea
-                placeholder="Foods description..." name='summary' required
-                className="textarea textarea-bordered textarea-lg w-full"></textarea>
             </div>
 
             <div className="form-control">

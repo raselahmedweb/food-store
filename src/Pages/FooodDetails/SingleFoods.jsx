@@ -19,7 +19,7 @@ export default function SingleFoods({ foods }) {
                         <a href="#">
                             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{foodName}</h5>
                         </a>
-                        <p className={`mb-3 font-semibold text-lg text-gray-700 ${foodStatus === "Available" ? "text-green-500" : ""} ${foodStatus === "Pending" ? "text-blue-600" : "text-blue-600"} ${foodStatus === "Expired" ? "text-[#e96666]" : ""} inline rounded-full`}>{foodStatus}</p>
+                        <p className={`mb-3 font-semibold text-lg ${foodStatus === "Available" ? "text-green-500" : ""} ${foodStatus === "Requested" ? "text-blue-600" : ""} ${foodStatus === "Expired" ? "text-[#e96666]" : ""} inline rounded-full`}>{foodStatus}</p>
                         <p className="mb-3 font-semibold text-lg text-gray-700 dark:text-gray-400 bg-gray">Quantity: <span className=' bg-gray-700 py-1 px-3 rounded-full'>{quantity}</span></p>
                         <p className="mb-3 font-semibold text-lg text-gray-700 dark:text-gray-400">Expired Date: {expireDateTime}</p>
                         <p className="mb-3 font-semibold text-lg text-gray-700 dark:text-gray-400 bg-gray">Locations: {location}</p>
