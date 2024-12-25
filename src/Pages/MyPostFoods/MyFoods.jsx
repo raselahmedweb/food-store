@@ -1,13 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { authContext } from '../../Provider/AuthProvider'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CiEdit } from 'react-icons/ci';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 
 export default function MyFoods() {
   const { user } = useContext(authContext)
   const [myFoods, setMyFoods] = useState([])
-  console.log(myFoods);
+  
+  const Navigate = useNavigate();
 
   // Fetch my foods from MongoDB--------------
 
@@ -23,6 +24,7 @@ export default function MyFoods() {
     // }, [user.email])
   }, [user?.email])
 
+
   return (
     <>
       {
@@ -35,7 +37,7 @@ export default function MyFoods() {
                 <thead>
                   <tr>
                     <th className=' text-lg text-white'>Foods</th>
-                    <th className=' text-lg text-white'>Food Title</th>
+                    <th className=' text-lg text-white'>Expired Date</th>
                     <th className=' text-lg text-white'>Quantity</th>
                     <th className=' text-lg text-white'>Food Status</th>
                     <th className=' text-lg text-white'>Customs</th>
@@ -43,7 +45,7 @@ export default function MyFoods() {
                 </thead>
                 {
                   myFoods.map(donar =>
-                    <tbody>
+                    <tbody key={donar._id}>
                       {/* row 1 */}
                       <tr>
                         <td>
@@ -62,14 +64,12 @@ export default function MyFoods() {
                           </div>
                         </td>
                         <td>
-                          food name two
-                          <br />
-                          <span className="badge badge-ghost badge-sm">Desktop Support Technician</span>
+                          <h2 className="badge badge-ghost text-lime-400 font-bold">{donar.expireDateTime}</h2>
                         </td>
                         <td><span className=' bg-gray-700 font-bold py-1 px-3 rounded-full'>{donar.quantity}</span></td>
                         <td className={`${donar.foodStatus === "Available" ? "text-green-500" : ""} ${donar.foodStatus === "Requested" ? "text-blue-600" : ""} ${donar.foodStatus === "Expired" ? "text-[#e96666]" : ""}`}>{donar.foodStatus}</td>
                         <th>
-                          <button onClick={() => handleDelete(donar._id)} className="btn bg-gray-600 text-white font-semibold mr-3 text-md"><CiEdit /> Edit</button>
+                          <Link to={`/update/${donar._id}`} className="btn bg-gray-600 text-white font-semibold mr-3 text-md"><CiEdit /> Edit</Link>
                           <button onClick={() => handleDelete(donar._id)} className="btn btn-error font-semibold text-md"><RiDeleteBin5Line /> Delete</button>
                         </th>
                       </tr>

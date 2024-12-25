@@ -20,6 +20,7 @@ import AllFoods from './Pages/AllFoods/AllFoods';
 import AddFood from './Pages/AddFoods/AddFood';
 import AuthProvider from './Provider/AuthProvider';
 import FoodDetails from './Pages/FooodDetails/FoodDetails';
+import UpdateFood from './Pages/MyPostedFoodsUpdate/UpdateFood';
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,11 @@ const router = createBrowserRouter([
       {
         path: "/mypost",
         element: <MyFoods />,
+      },
+      {
+        path: "/update/:id",
+        element: <UpdateFood />,
+        loader: ( { params } )=> fetch(`${import.meta.env.VITE_foods_api}/food/${params.id}`)
       },
       {
         path: "/myrequest",
