@@ -3,11 +3,12 @@ import { authContext } from '../../Provider/AuthProvider'
 import { Link, useNavigate } from 'react-router-dom';
 import { CiEdit } from 'react-icons/ci';
 import { RiDeleteBin5Line } from 'react-icons/ri';
+import Swal from 'sweetalert2';
 
 export default function MyFoods() {
   const { user } = useContext(authContext)
   const [myFoods, setMyFoods] = useState([])
-  
+
   const Navigate = useNavigate();
 
   // Fetch my foods from MongoDB--------------
@@ -24,11 +25,47 @@ export default function MyFoods() {
     // }, [user.email])
   }, [user?.email])
 
+  /// delete my posted data form mongodb -----------------------
+
+  const handleDelete = (id) => {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be delete this food",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          fetch(`${import.meta.env.VITE_foods_api}/delete/${id}`, {
+            method: 'DELETE',
+          })
+            .then(response => response.json())
+            .then(data => {
+              if (data.deletedCount > 0) {
+                Swal.fire({
+                  position: "center center",
+                  icon: "success",
+                  title: "Deleted successfully",
+                  showConfirmButton: false,
+                  timer: 2500
+                });
+                setMyFoods(myFoods.filter(food => food._id !== id))
+              }
+              // console.log(data);
+              Navigate('/mypost');
+
+            })
+        }
+      });
+  }
+
 
   return (
     <>
       {
-        !myFoods.length ? <h2 className=' text-center text-3xl font-bold min-h-screen flex justify-center items-center'>You are Not applied any Jobs.</h2> :
+        !myFoods.length ? <h2 className=' text-center text-3xl font-bold flex justify-center items-center'>You are Not posted any foods.</h2> :
           <div className=' container mx-auto w-full'>
             <div className="overflow-x-auto">
               <h2 className=' text-xl font-bold text-center my-10'>My Posted Foods </h2>
