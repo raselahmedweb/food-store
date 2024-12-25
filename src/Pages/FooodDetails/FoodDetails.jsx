@@ -197,7 +197,7 @@ export default function FoodDetails() {
                 </div>
                 <div className="flex flex-col justify-center col-span-3 p-4 w-full">
                     <h5 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">{foodName}</h5>
-                    <p className={`mb-3 font-bold text-lg text-gray-700 ${foodStatus === "Available" ? "text-green-500" : ""} ${foodStatus === "Pending" ? "text-blue-600" : "text-blue-600"} ${foodStatus === "Expired" ? "text-[#e96666]" : ""} inline rounded-full`}>{foodStatus}</p>
+                    <p className={`mb-3 font-bold text-lg ${foodStatus === "Available" ? "text-green-500" : ""} ${foodStatus === "Requested" ? "text-blue-600" : ""} ${foodStatus === "Expired" ? "text-[#e96666]" : ""} inline rounded-full`}>{foodStatus}</p>
                     <p className="mb-3 font-semibold text-lg text-gray-700 dark:text-gray-400">Quantity: <span className=' bg-gray-600 py-1 px-3 rounded-full'>{quantity}</span></p>
                     <p className="mb-3 font-semibold text-lg text-gray-700 dark:text-gray-400">D.R Email: {donator.name}</p>
                     <p className="mb-3 font-semibold text-lg text-gray-700 dark:text-gray-400">Expire Date: {expireDateTime}</p>
