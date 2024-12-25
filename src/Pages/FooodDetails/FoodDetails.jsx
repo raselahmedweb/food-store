@@ -60,6 +60,9 @@ export default function FoodDetails() {
 
         const foodId = _id;
         const userEamil = user?.email;
+        const foodStatuss = e.target.status.value;
+        console.log(foodStatuss);
+        
 
         const MyRequest = {
             foodName,
@@ -194,11 +197,11 @@ export default function FoodDetails() {
                                 <label className="label">
                                     <span className="label-text font-bold">Food Status</span>
                                 </label>
-                                <select className=' w-full p-3 bg-transparent border-2 rounded-md text-semibold outline-none text-gray-400 border-gray-700 focus:ring-2 focus:ring-gray-700' name="status" defaultValue={foodStatus} id="" required>
-                                    <option className=' text-black' value="" disabled selected>Food Status</option>
-                                    <option className=' text-black' value="available">available</option>
-                                    <option className=' text-black' value="requested">requested</option>
-                                    <option className=' text-black' value="sells">expired</option>
+                                <select className=' w-full p-3 bg-transparent border-2 rounded-md text-semibold outline-none text-gray-400 border-gray-700 focus:ring-2 focus:ring-gray-700' name="status" id="" required>
+                                    <option className=' text-black' value="" disabled>Food Status</option>
+                                    <option className=' text-black' value="Available">available</option>
+                                    <option className=' text-black' value="Requested">requested</option>
+                                    <option className=' text-black' value="Expired">expired</option>
                                 </select>
                             </div>
 
