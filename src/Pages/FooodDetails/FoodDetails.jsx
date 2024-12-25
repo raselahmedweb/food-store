@@ -7,70 +7,98 @@ export default function FoodDetails() {
 
     const { user } = useContext(authContext);
     const currrentTime = new Date();
-    const requestedTime = `${currrentTime.toLocaleDateString()} - ${currrentTime.toLocaleTimeString()}`
+    const requestedTime = `${currrentTime.toLocaleTimeString()}`
 
     const singleFoodData = useLoaderData();
-    console.log(singleFoodData);
 
     const { _id, foodName, foodImg, quantity, location, expireDateTime, donator, foodStatus } = singleFoodData;
     const Navigate = useNavigate();
-    const allMovie = () => {
-        Navigate('/allmovives');
-    }
 
-    const handledelete = (id) => {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be delete this movie",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                fetch(`https://movie-portal-back.vercel.app/delete/${id}`, {
-                    method: 'DELETE',
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.deletedCount > 0) {
-                            Swal.fire({
-                                position: "center center",
-                                icon: "success",
-                                title: "Deleted successfully",
-                                showConfirmButton: false,
-                                timer: 2500
-                            });
-                        }
-                        // console.log(data);
-                        Navigate('/allmovives');
+    // const handledelete = (id) => {
+    //     Swal.fire({
+    //         title: "Are you sure?",
+    //         text: "You won't be delete this movie",
+    //         icon: "warning",
+    //         showCancelButton: true,
+    //         confirmButtonColor: "#3085d6",
+    //         cancelButtonColor: "#d33",
+    //         confirmButtonText: "Yes, delete it!"
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             fetch(`https://movie-portal-back.vercel.app/delete/${id}`, {
+    //                 method: 'DELETE',
+    //             })
+    //                 .then(response => response.json())
+    //                 .then(data => {
+    //                     if (data.deletedCount > 0) {
+    //                         Swal.fire({
+    //                             position: "center center",
+    //                             icon: "success",
+    //                             title: "Deleted successfully",
+    //                             showConfirmButton: false,
+    //                             timer: 2500
+    //                         });
+    //                     }
+    //                     // console.log(data);
+    //                     Navigate('/allmovives');
 
-                    })
-            }
-        });
-    }
+    //                 })
+    //         }
+    //     });
+    // }
 
     /// Updated movies functionality start here here now ---------------------------------
 
-    const handleUpdate = (id) => {
-        Navigate(`/updatemovie/${id}`);
+    // const handleUpdate = (id) => {
+    //     Navigate(`/updatemovie/${id}`);
+    // }
+
+    /// my requested foods data save in database .................................
+
+    const handleRequest = (e) => {
+        e.preventDefault();
+
+        const foodId = _id;
+        const userEamil = user?.email;
+
+        const MyRequest = {
+            foodName,
+            foodId,
+            foodImg,
+            requestedTime,
+            userEamil,
+            expireDateTime,
+            foodStatus,
+            location,
+            donator
+          }
+
+        /// MyRequested data save in database ..............
+
+        fetch(`${import.meta.env.VITE_foods_api}/request`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(MyRequest)
+        })
+           .then(response => response.json())
+           .then(data => {
+                console.log(data);
+                if (data.insertedId) {
+                    Swal.fire({
+                        position: "center center",
+                        icon: "success",
+                        title: "Request sent successfully",
+                        showConfirmButton: false,
+                        timer: 2500
+                    });
+                    Navigate('/myrequest');
+                }
+            })
+
     }
 
-    /// favirite functionality starting .................................
-
-    const handleRequest = () => {
-
-        my_modal_3.showModal()
-
-        // Swal.fire({
-        //     position: "center center",
-        //     icon: "success",
-        //     title: "Request Successfull",
-        //     showConfirmButton: false,
-        //     timer: 2000
-        //   });
-    }
 
 
     return (
@@ -78,7 +106,6 @@ export default function FoodDetails() {
 
             {/* useing the modal code */}
 
-            {/* You can open the modal using document.getElementById('ID').showModal() method */}
             <dialog id="my_modal_3" className="modal w-5xl">
                 <div className=" modal-box p-0 bg-gray-800">
                     <form method="dialog">
@@ -91,13 +118,13 @@ export default function FoodDetails() {
                                 <label className="label">
                                     <span className="label-text font-bold">Food Name</span>
                                 </label>
-                                <input name='DR' type="text" value={foodName} placeholder="DR Name" className="input input-bordered" required />
+                                <input name='foodName' type="text" value={foodName} placeholder="DR Name" className="input input-bordered" required />
                             </div>
                             <div className="form-control w-full">
                                 <label className="label">
                                     <span className="label-text font-bold">Food image</span>
                                 </label>
-                                <input name='email' type="text" value={foodImg} placeholder="DR your email" className="input input-bordered" required />
+                                <input name='foodImg' type="text" value={foodImg} placeholder="DR your email" className="input input-bordered" required />
                             </div>
 
                         </div>
@@ -109,13 +136,13 @@ export default function FoodDetails() {
                                 <label className="label">
                                     <span className="label-text font-bold">Food Id</span>
                                 </label>
-                                <input name='foodName' type="text" placeholder="Food Name" value={_id} className="input input-bordered" required />
+                                <input name='foodId' type="text" placeholder="Food Name" value={_id} className="input input-bordered" required />
                             </div>
                             <div className="form-control w-full">
                                 <label className="label">
                                     <span className="label-text font-bold">Donator Email</span>
                                 </label>
-                                <input name='date' type="text" value={donator.email} placeholder="expire date" className="input input-bordered" required />
+                                <input name='donarEmail' type="text" value={donator.email} placeholder="expire date" className="input input-bordered" required />
                             </div>
 
                         </div>
@@ -125,42 +152,42 @@ export default function FoodDetails() {
                                 <label className="label">
                                     <span className="label-text font-bold">Donator Name</span>
                                 </label>
-                                <input name='photo' type="text" value={donator.name} placeholder="Food URL" className="input input-bordered" required />
+                                <input name='donarName' type="text" value={donator.name} placeholder="Food URL" className="input input-bordered" required />
                             </div>
                             <div className="form-control w-full">
                                 <label className="label">
                                     <span className="label-text">User email</span>
                                 </label>
-                                <input name='quentity' type="text" value={user?.email} placeholder="Food Quentity" className="input input-bordered" required />
+                                <input name='userEmail' type="text" value={user?.email} placeholder="Food Quentity" className="input input-bordered" required />
                             </div>
                         </div>
                         {/* 3rd value collection */}
                         <div className=' flex justify-between items-center gap-5 my-2'>
-                            
+
                             <div className="form-control w-full">
                                 <label className="label">
                                     <span className="label-text">Request Date</span>
                                 </label>
-                                <input name='location' type="text" value={requestedTime}  placeholder="current date" className="input input-bordered" required />
+                                <input name='requestDate' type="text" value={requestedTime} placeholder="current date" className="input input-bordered" required />
                             </div>
 
                             <div className="form-control w-full">
                                 <label className="label">
                                     <span className="label-text">Picup location</span>
                                 </label>
-                                <input name='location' type="text" value={location}  placeholder="current date" className="input input-bordered" required />
+                                <input name='location' type="text" value={location} placeholder="current date" className="input input-bordered" required />
                             </div>
 
-                            
+
                         </div>
                         {/* 4th value collection */}
                         <div className=' flex justify-between items-center gap-5 my-2'>
-                            
+
                             <div className="form-control w-full">
                                 <label className="label">
                                     <span className="label-text">Expired Date</span>
                                 </label>
-                                <input name='location' type="text" value={expireDateTime}  placeholder="current date" className="input input-bordered" required />
+                                <input name='expireDate' type="text" value={expireDateTime} placeholder="current date" className="input input-bordered" required />
                             </div>
 
                             <div className="form-control w-full">
@@ -175,11 +202,11 @@ export default function FoodDetails() {
                                 </select>
                             </div>
 
-                            
+
                         </div>
 
                         <div className="form-control">
-                            <button className="btn btn-accent text-white">Request</button>
+                            <button onClick={handleRequest} className="btn btn-accent text-white">Request</button>
                         </div>
                     </div>
                 </div>
@@ -204,7 +231,7 @@ export default function FoodDetails() {
                     <p className="mb-3 font-semibold text-lg text-gray-700 dark:text-gray-400">Location: {location}</p>
                     <div className=' flex gap-5 items-center mt-5'>
                         <Link to="/allfood" className=' btn btn-primary font-semibold text-white'>Add to Other</Link>
-                        <button onClick={handleRequest} className=' btn btn-accent font-semibold text-white'>Add to Request</button>
+                        <button onClick={() => my_modal_3.showModal()} className=' btn btn-accent font-semibold text-white'>Add to Request</button>
                     </div>
                 </div>
             </div>
