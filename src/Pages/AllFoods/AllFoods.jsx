@@ -14,7 +14,7 @@ export default function AllMovies() {
   const [search, setSearch] = useState("");
   
 
-/// sorting functationality starts here now....
+  /// sorting functationality starts here now....
 
   const handleSort = ()=>{
     const sortedFoods = [...foodData].sort((a, b) => b.quantity - a.quantity);
@@ -41,7 +41,7 @@ export default function AllMovies() {
   
   return (
     <>
-      <div className=' w-96 md:container mx-auto min-h-screen'>
+      <div className=' w-96 md:container mx-auto'>
         <div className=' md:flex justify-between items-center my-10'>
           <div>
             <h2 className=' text-xl font-bold'>Total Foods Data ({foodData.length}) </h2>
@@ -62,8 +62,8 @@ export default function AllMovies() {
          {
           foodData.length?
           <div className={`grid md:grid-cols-2 ${layout === true ? "lg:grid-cols-2" : "lg:grid-cols-3"} gap-10 mb-10`}>
-          { foodData.map(foods => <SingleFoods key={foods._id} foods={foods} />)}
-        </div> : <div className=' text-3xl font-semibold flex justify-center gap-3 items-center min-h-screen'> <IoSearchSharp /> Not found Foods</div>
+           {foodData.map(foods => <SingleFoods key={foods._id} foods={foods} />)}
+           </div> : <div className=' text-3xl font-semibold flex justify-center gap-3 items-center'> <IoSearchSharp /> Not found Foods</div>
         }
       </div>
     </>

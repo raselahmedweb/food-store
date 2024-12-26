@@ -42,11 +42,33 @@ const AuthProvider = ({ children }) => {
        }
 
 
-    useEffect(()=>{
-      const unsubscribe = onAuthStateChanged(auth, (currentUser) =>{
-          setUser(currentUser);
-          setLoading(false);
-      })
+       useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, currentUser => {
+            setUser(currentUser);
+            console.log('state captured', currentUser?.email)
+            if (currentUser?.email) {
+                const user = { email: currentUser.email };
+
+                axios.post(`${import.meta.env.VITE_foods_api}/jwt`, user, {
+                    withCredentials: true  /// mane sever side er sate comminucation er jonno access ditesi
+                })
+                    .then(res => {
+                        console.log(res.data)
+                        setLoading(false);
+                    })
+            }
+            else {
+                axios.post(`${import.meta.env.VITE_foods_api}/logout`, {}, {
+                    withCredentials: true
+                })
+                    .then(res => {
+                        console.log("logout", res.data)
+                        setLoading(false);
+
+                    })
+            }
+            setLoading(false);
+        })
       return ()=>{
           setUser(unsubscribe);
       }

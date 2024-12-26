@@ -41,10 +41,12 @@ export default function Navbar() {
                 <nav>
                     <ul className=' flex flex-col items-start gap-5 mt-5'>
                         <li><NavLink to="/">Home</NavLink></li>
-                        <li><NavLink to="/camping">Camping</NavLink></li>
-                        <li><NavLink to="/bungeejumping">Bungee Jumping</NavLink></li>
-                        {/* {user && user.email ? <li><NavLink to="/Profile">Profile</NavLink></li> : ""}
-                        {user && user.email ? <li><NavLink to="/updata">Updata Profile</NavLink></li> : ""} */}
+                        <li><NavLink to="/allfood">Available Foods</NavLink></li>
+                        {user && user.email ? <li><NavLink to="/addfood">Add Foods</NavLink></li> : ""}
+                        {user && user.email ? <li><NavLink to="/mypost">Manage My Foods</NavLink></li> : ""}
+                        {user && user.email ? <li><NavLink to="/myrequest">My Food Request</NavLink></li> : ""}
+                        <li><NavLink to="/cook">Cooking</NavLink></li>
+                        <li><NavLink to="/delivary">Delivary</NavLink></li>
                     </ul>
                 </nav>
             </div>

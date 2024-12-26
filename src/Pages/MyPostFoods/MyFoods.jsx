@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { CiEdit } from 'react-icons/ci';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 export default function MyFoods() {
   const { user } = useContext(authContext)
@@ -11,19 +12,21 @@ export default function MyFoods() {
 
   const Navigate = useNavigate();
 
+  const axiosSecure = useAxiosSecure();
+
   // Fetch my foods from MongoDB--------------
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_foods_api}/posted?email=${user?.email}`)
-      .then(res => res.json())
-      .then(data => setMyFoods(data))
+    // fetch(`${import.meta.env.VITE_foods_api}/posted?email=${user?.email}`)
+    //   .then(res => res.json())
+    //   .then(data => setMyFoods(data))
 
-    //     axios.get(`http://localhost:5000/apply?email=${user.email}`, /// axios use korle amader duibar then korte hoy na and method headers asob kono kicu dite hoy nah
-    //     {withCredentials: true})
-    //     .then(res => setJobs(res.data)
-    //     )
-    // }, [user.email])
-  }, [user?.email])
+    axiosSecure.get(`/posted?email=${user?.email}`, /// axios use korle amader duibar then korte hoy na and method headers asob kono kicu dite hoy nah
+        {withCredentials: true})
+        .then(res => setMyFoods(res.data)
+        )
+    }, [user.email])
+  // }, [user?.email])
 
   /// delete my posted data form mongodb -----------------------
 

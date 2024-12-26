@@ -34,7 +34,7 @@ export default function HomeCards() {
           </div>
         </div>)}
       </div>
-      <div className=' flex justify-center items-center w-full my-20'><Link to="/allfood" className=' btn btn-accent'>See More Movie</Link></div>
+      <div className=' flex justify-center items-center w-full my-20'><Link to="/allfood" className=' btn btn-accent'>See All Foods</Link></div>
 
     </>
   )

@@ -13,10 +13,10 @@ export default function Footer() {
                                     <h3
                                         className="mb-6 text-3xl font-bold inline-block max-w-full"
                                     >
-                                        Movie Portal
+                                        Food Sharing
                                     </h3>
                                     <p className="text-base text-body-color dark:text-dark-6 mb-7">
-                                        A movie portal is a web or mobile application that serves as a platform for users to explore, discover, and engage with movies and related content.
+                                        A food portal is a web or mobile application that serves as a platform for users to explore, discover, and engage with movies and related content.
                                     </p>
                                     <p
                                         className="flex items-center text-sm font-medium text-dark dark:text-white"
@@ -306,7 +306,7 @@ export default function Footer() {
                     </div>
                     <div className='text-center'>
                         <p className="text-base text-body-color dark:text-dark-6">
-                            &copy; 2024 Movie Portal Designerd by <span className=' font-semibold text-orange-600 cursor-pointer  text-center'>Mostafiz</span>
+                            &copy; 2024 Food Sharing Designerd by <span className=' font-semibold text-orange-600 cursor-pointer  text-center'>Mostafiz</span>
                         </p>
                     </div>
                 </footer>

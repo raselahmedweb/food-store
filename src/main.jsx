@@ -21,6 +21,7 @@ import AddFood from './Pages/AddFoods/AddFood';
 import AuthProvider from './Provider/AuthProvider';
 import FoodDetails from './Pages/FooodDetails/FoodDetails';
 import UpdateFood from './Pages/MyPostedFoodsUpdate/UpdateFood';
+import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
 
 const router = createBrowserRouter([
   {
@@ -38,25 +39,25 @@ const router = createBrowserRouter([
       },
       {
         path: "/details/:id",
-        element: <FoodDetails />,
+        element: <PrivateRoute><FoodDetails /></PrivateRoute>,
         loader: ( { params } )=> fetch(`${import.meta.env.VITE_foods_api}/food/${params.id}`)
       },
       {
         path: "/addfood",
-        element: <AddFood />,
+        element: <PrivateRoute><AddFood /></PrivateRoute>,
       },
       {
         path: "/mypost",
-        element: <MyFoods />,
+        element: <PrivateRoute><MyFoods /></PrivateRoute>,
       },
       {
         path: "/update/:id",
-        element: <UpdateFood />,
+        element: <PrivateRoute><UpdateFood /></PrivateRoute>,
         loader: ( { params } )=> fetch(`${import.meta.env.VITE_foods_api}/food/${params.id}`)
       },
       {
         path: "/myrequest",
-        element: <MyRequestFood />,
+        element: <PrivateRoute><MyRequestFood /></PrivateRoute>,
       },
       {
         path: "/cook",
