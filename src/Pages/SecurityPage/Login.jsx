@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { FaGoogle } from 'react-icons/fa6';
 import { IoMdClose, IoMdEyeOff } from 'react-icons/io'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { authContext } from '../../Provider/AuthProvider';
@@ -10,6 +10,8 @@ export default function Login() {
 
   const { singInUser, setUser, singInWithGoogle } = useContext(authContext);
   const Navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state || "/";
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,7 +26,7 @@ export default function Login() {
         setUser(result.user);
         toast.success("Login Succfull")
         setTimeout(() => {
-          Navigate("/")
+          Navigate(from)
         }, 2000)
       })
       .catch(error => {

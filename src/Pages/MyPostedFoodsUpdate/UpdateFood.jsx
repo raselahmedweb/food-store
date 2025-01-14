@@ -71,7 +71,7 @@ export default function AddFood() {
       })
         .then(res => res.json())
         .then(data => {
-          console.log(data);
+          // console.log(data);
           if (data.modifiedCount > 0) {
             Swal.fire({
               position: "center center",

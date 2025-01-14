@@ -6,7 +6,7 @@ import { authContext } from '../../Provider/AuthProvider';
 
 export default function AddFood() {
   const { user } = useContext(authContext);
-  console.log(user);
+  // console.log(user);
   
   const Navigate = useNavigate();
 
@@ -60,7 +60,7 @@ export default function AddFood() {
       donator,
       foodStatus, 
     }
-    console.log(addFoods);
+    // console.log(addFoods);
        
       fetch(`${import.meta.env.VITE_foods_api}/addfoods`, {
         method: 'POST',
@@ -96,7 +96,7 @@ export default function AddFood() {
           <h2 className=' text-center font-bold  text-2xl mt-5'>Add Foods</h2>
           <Link to="/" className=' absolute top-1 -right-2 w-10 h-10 rounded-full text-red-400 text-2xl'><IoMdClose /></Link>
           <form onSubmit={handleSubmit} className="card-body">
-            <div className=' flex justify-between items-center gap-5 my-2'>
+            <div className=' md:flex justify-between items-center gap-5 my-2'>
               <div className="form-control w-full">
                 <label className="label">
                   <span className="label-text font-bold">D.R Name</span>
@@ -114,7 +114,7 @@ export default function AddFood() {
 
             {/* part two faield */}
 
-            <div className=' flex justify-between items-center gap-5 my-2'>
+            <div className=' md:flex justify-between items-center gap-5 my-2'>
               <div className="form-control w-full">
                 <label className="label">
                   <span className="label-text font-bold">Food Name</span>
@@ -130,7 +130,7 @@ export default function AddFood() {
 
             </div>
             {/* 2nd value collection */}
-            <div className=' flex justify-between items-center gap-5 my-2'>
+            <div className=' md:flex justify-between items-center gap-5 my-2'>
             <div className="form-control w-full">
                 <label className="label">
                   <span className="label-text font-bold">Food URL</span>
@@ -145,7 +145,7 @@ export default function AddFood() {
               </div>
             </div>
             {/* 3rd value collection */}
-            <div className=' flex justify-between items-center gap-5 my-2'>
+            <div className=' md:flex justify-between items-center gap-5 my-2'>
               <div className="form-control w-full">
                 <label className="label">
                   <span className="label-text font-bold">Food Status</span>
@@ -153,8 +153,8 @@ export default function AddFood() {
                 <select className=' p-3 bg-transparent border-2 rounded-md text-semibold outline-none text-gray-400 border-gray-700 focus:ring-2 focus:ring-gray-700' name="status" id="" required>
                   <option className=' text-black' value="" disabled selected>Food Status</option>
                   <option className=' text-black' value="Available">Available</option>
-                  <option className=' text-black' value="Requested">Requested</option>
-                  <option className=' text-black' value="Expired">Expired</option>
+                  {/* <option className=' text-black' value="Requested">Requested</option>
+                  <option className=' text-black' value="Expired">Expired</option> */}
                 </select>
               </div>
               <div className="form-control w-full">

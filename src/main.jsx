@@ -22,6 +22,10 @@ import AuthProvider from './Provider/AuthProvider';
 import FoodDetails from './Pages/FooodDetails/FoodDetails';
 import UpdateFood from './Pages/MyPostedFoodsUpdate/UpdateFood';
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
 
 const router = createBrowserRouter([
   {
@@ -35,12 +39,12 @@ const router = createBrowserRouter([
       {
         path: "/allfood",
         element: <AllFoods />,
-        loader: ()=> fetch(`${import.meta.env.VITE_foods_api}/foods`)
+        loader: () => fetch(`${import.meta.env.VITE_foods_api}/foods`)
       },
       {
         path: "/details/:id",
         element: <PrivateRoute><FoodDetails /></PrivateRoute>,
-        loader: ( { params } )=> fetch(`${import.meta.env.VITE_foods_api}/food/${params.id}`)
+        loader: ({ params }) => fetch(`${import.meta.env.VITE_foods_api}/food/${params.id}`)
       },
       {
         path: "/addfood",
@@ -53,12 +57,18 @@ const router = createBrowserRouter([
       {
         path: "/update/:id",
         element: <PrivateRoute><UpdateFood /></PrivateRoute>,
-        loader: ( { params } )=> fetch(`${import.meta.env.VITE_foods_api}/food/${params.id}`)
+        loader: ({ params }) => fetch(`${import.meta.env.VITE_foods_api}/food/${params.id}`)
       },
       {
         path: "/myrequest",
         element: <PrivateRoute><MyRequestFood /></PrivateRoute>,
+        loader: () => fetch(`${import.meta.env.VITE_foods_api}/request`)
       },
+      // {
+      //   path: "/request/:id",
+      //   element: <PrivateRoute><MyRequestFood /></PrivateRoute>,
+      //   loader: ( { params } )=> fetch(`${import.meta.env.VITE_foods_api}/request/${params.id}`)
+      // },
       {
         path: "/cook",
         element: <Cooking />,
@@ -83,11 +93,16 @@ const router = createBrowserRouter([
   },
 ]);
 
+const queryClient = new QueryClient()
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ToastContainer position='top-right' reverseOrder={false} />
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </QueryClientProvider>
+
   </React.StrictMode>,
 )

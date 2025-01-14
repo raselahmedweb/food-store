@@ -60,9 +60,6 @@ export default function FoodDetails() {
 
         const foodId = _id;
         const userEamil = user?.email;
-        const foodStatuss = e.target.status.value;
-        console.log(foodStatuss);
-        
 
         const MyRequest = {
             foodName,
@@ -71,12 +68,12 @@ export default function FoodDetails() {
             requestedTime,
             userEamil,
             expireDateTime,
-            foodStatus,
+            foodStatus: "Requested",
             location,
             donator
           }
 
-        /// MyRequested data save in database ..............
+        // / MyRequested data save in database ..............
 
         fetch(`${import.meta.env.VITE_foods_api}/request`, {
             method: 'POST',
@@ -87,7 +84,7 @@ export default function FoodDetails() {
         })
            .then(response => response.json())
            .then(data => {
-                console.log(data);
+                // console.log(data);
                 if (data.insertedId) {
                     Swal.fire({
                         position: "center center",
@@ -199,9 +196,7 @@ export default function FoodDetails() {
                                 </label>
                                 <select className=' w-full p-3 bg-transparent border-2 rounded-md text-semibold outline-none text-gray-400 border-gray-700 focus:ring-2 focus:ring-gray-700' name="status" id="" required>
                                     <option className=' text-black' value="" disabled>Food Status</option>
-                                    <option className=' text-black' value="Available">available</option>
                                     <option className=' text-black' value="Requested">requested</option>
-                                    <option className=' text-black' value="Expired">expired</option>
                                 </select>
                             </div>
 
@@ -209,7 +204,7 @@ export default function FoodDetails() {
                         </div>
 
                         <div className="form-control">
-                            <button onClick={handleRequest} className="btn btn-accent text-white">Request</button>
+                            <Link to={`/request/${_id}`} onClick={handleRequest} className="btn btn-accent text-white">Request</Link>
                         </div>
                     </div>
                 </div>

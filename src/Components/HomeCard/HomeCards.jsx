@@ -1,20 +1,36 @@
+import { useQuery } from '@tanstack/react-query'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 export default function HomeCards() {
 
-  const [foods, setFoods] = useState([])
+  // useing the transtrac queryes --------------
 
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_foods_api}/allfoods`)
-      .then(res => res.json())
-      .then(data => setFoods(data))
-  }, [])
+  const { isPending, data: foods} = useQuery({
+    queryKey: ['foods'],
+    queryFn: async () => {
+      const res = await fetch(`${import.meta.env.VITE_foods_api}/allfoods`)
+      return await res.json()
+    }
+  })
+
+
+  // const [foods, setFoods] = useState([])
+
+  // useEffect(() => {
+  //   fetch(`${import.meta.env.VITE_foods_api}/allfoods`)
+  //     .then(res => res.json())
+  //     .then(data => setFoods(data))
+  // }, [])
+
+  if(isPending){
+    return <div className=' flex justify-center items-center h-screen'>Loading...</div>
+  }
 
   return (
     <>
-      <div className=' grid md:grid-cols-2 lg:grid-cols-3 gap-10 container mx-auto md:mt-20'>
-        {foods.map(data => <div key={data._id}>
+      <div className=' grid md:grid-cols-2 lg:grid-cols-3 gap-10 container mx-auto md:my-20'>
+        {foods?.map(data => <div key={data._id}>
           <div className=" bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <a href="#">
               <img className="rounded-t-lg object-cover w-full h-[300px]" src={data.foodImg} alt="" />
@@ -34,7 +50,7 @@ export default function HomeCards() {
           </div>
         </div>)}
       </div>
-      <div className=' flex justify-center items-center w-full my-20'><Link to="/allfood" className=' btn btn-accent'>See All Foods</Link></div>
+      <div className={`${foods.length ? "flex justify-center items-center w-full my-10" : "hidden"}`}><Link to="/allfood" className='btn btn-accent'>See All Foods</Link></div>
 
     </>
   )

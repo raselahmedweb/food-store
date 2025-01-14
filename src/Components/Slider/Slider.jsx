@@ -36,19 +36,19 @@ export default function Slider() {
         <SwiperSlide>
           <Slide
             image={bgimg1}
-            text='Get Your Web Development Projects Done in minutes'
+            text='Delicious Moments Together'
           />
         </SwiperSlide>
         <SwiperSlide>
           <Slide
             image={bgimg2}
-            text='Get Your Graphics Design Projects Done in minutes'
+            text='Share Your Favorite Dishes'
           />
         </SwiperSlide>
         <SwiperSlide>
           <Slide
             image={bgimg3}
-            text='Start Your Digital Marketing Campaigns up n running'
+            text='A Tasteful Experience'
           />
         </SwiperSlide>
       </Swiper>
