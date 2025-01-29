@@ -184,7 +184,7 @@ export default function Footer() {
                                     </h4>
                                     <div className="flex items-center mb-6">
                                         <a
-                                            href="https://facebook.com/" target='_blank'
+                                            href="https://facebook.com/raselahmedweb" target='_blank'
                                             className="flex items-center justify-center w-8 h-8 mr-3 border rounded-full text-dark hover:border-primary hover:bg-primary border-stroke dark:border-dark-3 dark:hover:border-primary dark:text-white hover:text-white sm:mr-4 lg:mr-3 xl:mr-4"
                                         >
                                             <svg
@@ -199,7 +199,7 @@ export default function Footer() {
                                             </svg>
                                         </a>
                                         <a
-                                            href="https://twitter.com/" target='_blank'
+                                            href="https://x.com/raselahmedweb" target='_blank'
                                             className="flex items-center justify-center w-8 h-8 mr-3 border rounded-full text-dark hover:border-primary hover:bg-primary border-stroke dark:border-dark-3 dark:hover:border-primary dark:text-white hover:text-white sm:mr-4 lg:mr-3 xl:mr-4"
                                         >
                                             <svg
@@ -229,7 +229,7 @@ export default function Footer() {
                                             </svg>
                                         </a>
                                         <a
-                                            href="https://www.linkedin.com/" target='_blank'
+                                            href="https://www.linkedin.com/in/raselahmedweb" target='_blank'
                                             className="flex items-center justify-center w-8 h-8 mr-3 border rounded-full text-dark hover:border-primary hover:bg-primary border-stroke dark:border-dark-3 dark:hover:border-primary dark:text-white hover:text-white sm:mr-4 lg:mr-3 xl:mr-4"
                                         >
                                             <svg
@@ -306,7 +306,7 @@ export default function Footer() {
                     </div>
                     <div className='text-center'>
                         <p className="text-base text-body-color dark:text-dark-6">
-                            &copy; 2024 Food Sharing Designerd by <span className=' font-semibold text-orange-600 cursor-pointer  text-center'>Mostafiz</span>
+                            &copy; 2024 Food Sharing Designerd by <span className=' font-semibold text-green-600 cursor-pointer  text-center'>Rasel</span>
                         </p>
                     </div>
                 </footer>

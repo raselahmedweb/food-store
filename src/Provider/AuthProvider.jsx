@@ -1,10 +1,10 @@
-import React, { createContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { getAuth, updateProfile } from "firebase/auth";
 import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { app } from '../Firebase/firebase.config';
 import axios from 'axios';
 const auth = getAuth(app);
-export const authContext = createContext(null)
+export const authContext = createContext(null);
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -54,7 +54,7 @@ const AuthProvider = ({ children }) => {
                     withCredentials: true  /// mane sever side er sate comminucation er jonno access ditesi
                 })
                     .then(res => {
-                        // console.log(res.data)
+                       console.log(res.data)
                         setLoading(false);
                     })
             }
@@ -63,7 +63,7 @@ const AuthProvider = ({ children }) => {
                     withCredentials: true
                 })
                     .then(res => {
-                        // console.log("logout", res.data)
+                        console.log("logout", res.data)
                         setLoading(false);
 
                     })
